@@ -1,7 +1,7 @@
 <div th:fragment="navbar">
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container-fluid">
-        <a th:href="@{/}" class="navbar-brand mx-auto" aria-current="page"><h1 id="photogram">Photogram</h1></a>
+        <a th:href="@{/feed}" class="navbar-brand mx-auto" aria-current="page"><h1 id="photogram">Photogram</h1></a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,39 +10,33 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a th:href="@{#}" class="nav-link" aria-current="page">
+                    <a th:href="@{/profile}" class="nav-link" aria-current="page">
                         <i class="fa-solid fa-address-card"></i>&nbsp;My profile
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{#}" class="nav-link" aria-current="page">
+                    <a th:href="@{/chats}" class="nav-link" aria-current="page">
                         <i class="fa-solid fa-comment-dots"></i>&nbsp;Chats
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{#}" class="nav-link" aria-current="page">
+                    <a th:href="@{/feed}" class="nav-link" aria-current="page">
                         <i class="fa-solid fa-image"></i>&nbsp;Feed
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{#}" class="nav-link" aria-current="page">
+                    <a th:href="@{/followers}" class="nav-link" aria-current="page">
                         <i class="fa-solid fa-person-running fa-lg"></i>&nbsp;Followers
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{#}" class="nav-link" aria-current="page">
+                    <a th:href="@{/following}" class="nav-link" aria-current="page">
                         <i class="fa-solid fa-star fa-lg"></i>&nbsp;Following
                     </a>
                 </li>
             </ul>
 
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a th:href="@{#}" class="nav-link">
-
-                    </a>
-                </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-user"></i>&nbsp;<span>Username</span>
@@ -60,12 +54,6 @@
                             <a th:href="@{#}" class="dropdown-item">
                                 <i class="fa-solid fa-screwdriver-wrench" style="color: #d4200c;"></i>&nbsp;Admin panel
                             </a>
-                        </li>
-                        <li>
-                            <a th:href="@{#}" class="dropdown-item">Sign in</a>
-                        </li>
-                        <li>
-                            <a th:href="@{#}" class="dropdown-item">Sign up</a>
                         </li>
                     </ul>
                 </li>
