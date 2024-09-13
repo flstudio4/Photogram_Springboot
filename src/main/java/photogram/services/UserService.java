@@ -1,9 +1,9 @@
-package user_management_demo.services;
+package photogram.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import user_management_demo.models.User;
-import user_management_demo.repositories.UserRepository;
+import photogram.models.User;
+import photogram.repositories.UserRepository;
 
 import java.util.List;
 

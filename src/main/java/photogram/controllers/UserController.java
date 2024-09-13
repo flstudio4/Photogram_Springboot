@@ -1,4 +1,4 @@
-package user_management_demo.controllers;
+package photogram.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import user_management_demo.models.User;
-import user_management_demo.services.UserService;
+import photogram.models.User;
+import photogram.services.UserService;
 
 @Controller
 public class UserController {
