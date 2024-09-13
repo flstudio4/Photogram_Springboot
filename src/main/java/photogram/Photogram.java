@@ -1,11 +1,11 @@
-package user_management_demo;
+package photogram;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserManagementDemoApplication {
+public class Photogram {
 
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.load();
@@ -14,6 +14,6 @@ public class UserManagementDemoApplication {
         System.setProperty("spring.datasource.username", dbUsername);
         System.setProperty("spring.datasource.password", dbPassword);
 
-        SpringApplication.run(UserManagementDemoApplication.class, args);
+        SpringApplication.run(Photogram.class, args);
     }
 }

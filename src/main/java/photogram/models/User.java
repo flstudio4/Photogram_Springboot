@@ -1,4 +1,4 @@
-package user_management_demo.models;
+package photogram.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
