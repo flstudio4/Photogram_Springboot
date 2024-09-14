@@ -1,14 +1,14 @@
 package photogram.services;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import photogram.models.User;
 import photogram.repositories.UserRepository;
 
-import java.util.List;
-
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -16,19 +16,19 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
-
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User getUserById(Integer id) {
+    public User getUserById(int id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    public void deleteUser(Integer id) {
-        userRepository.deleteById(id);
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 }
