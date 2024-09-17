@@ -43,6 +43,6 @@ public class SignUpController {
 
         userService.saveUser(newUser);
 
-        return "redirect:/sign_in";
+        return "redirect:/profile";
     }
 }
