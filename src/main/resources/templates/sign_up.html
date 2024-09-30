@@ -22,21 +22,31 @@
     <div class="form-container">
         <h1 class="photogram">Photogram</h1>
         <p class="subtitle">New user registration</p>
-        <form th:action="@{/sign_up}" method="post">
+        <form th:action="@{/sign_up}" th:object="${user}" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
             <div class="form-group">
-                <input type="text" id="username" required placeholder=" " name="username">
+                <input type="text" id="username" th:field="*{username}" required placeholder=" ">
                 <label for="username">Username</label>
             </div>
+
             <div class="form-group">
-                <input type="password" id="password" required placeholder=" " name="password">
+                <input type="email" id="email" th:field="*{email}" required placeholder=" ">
+                <label for="email">Email</label>
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="password" th:field="*{password}" required placeholder=" ">
                 <label for="password">Password</label>
             </div>
+
             <div class="form-group">
-                <input type="password" id="confirm-password" required placeholder=" " name="confirmPassword">
+                <input type="password" id="confirm-password" name="confirmPassword" required placeholder=" ">
                 <label for="confirm-password">Confirm Password</label>
             </div>
+
             <button type="submit" class="form-button">Sign Up</button>
+
             <div class="form-footer">
                 <p>Already have an account?<br> <a href="/sign_in">Sign In</a></p>
                 <p>Return <a href="/">Home</a></p>
