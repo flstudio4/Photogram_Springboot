@@ -1,21 +1,22 @@
 package photogram.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import photogram.models.User;
 import photogram.services.UserService;
 
-import javax.validation.Valid;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
-@RequestMapping("/sign_up")
 public class SignUpController {
 
     private final UserService userService;
@@ -27,44 +28,60 @@ public class SignUpController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping
+    @ModelAttribute("user")
+    public User user() {
+        return new User();
+    }
+
+    @GetMapping("/sign_up")
     public String signUpForm(Model model) {
         model.addAttribute("user", new User());
         return "sign_up";
     }
 
-    @PostMapping
-    public String signUp(@Valid User newUser,
-                         String confirmPassword,
+    @PostMapping("/sign_up")
+    public String signUp(@Valid @ModelAttribute("user") User newUser,
                          BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
                          Model model) {
 
         if (bindingResult.hasErrors()) {
             return "sign_up";
         }
 
-        if (!newUser.getPassword().equals(confirmPassword)) {
-            model.addAttribute("error", "Passwords do not match");
-            return "sign_up";
-        }
-
-        if (!isValidPassword(newUser.getPassword())) {
-            model.addAttribute("error", "Password must be more complex.");
-            return "sign_up";
-        }
-
         if (!isValidUsername(newUser.getUsername())) {
-            model.addAttribute("error", "Username should only contain letters and numbers");
+            bindingResult.rejectValue("username", "error.username", "Username should only contain letters and numbers");
             return "sign_up";
         }
 
         if (!isValidUsernameLength(newUser.getUsername())) {
-            model.addAttribute("error", "Username must be at least 6 characters and no longer than 12 characters");
+            bindingResult.rejectValue("username", "error.username", "Username must be at least 6 characters and no longer than 12 characters");
             return "sign_up";
         }
 
         if (!isRepeatingCharacters(newUser.getUsername())) {
-            model.addAttribute("error", "Username should not contain repeating characters");
+            bindingResult.rejectValue("username", "error.username", "Username should not contain repeating characters");
+            return "sign_up";
+        }
+
+        if (userService.usernameExists(newUser.getUsername())) {
+            bindingResult.rejectValue("username", "error.username", "Username is already taken");
+        }
+
+        if (userService.ifEmailExists(newUser.getEmail())) {
+            bindingResult.rejectValue("email", "error.email", "Email is already taken");
+        }
+
+        if (!newUser.getPassword().equals(newUser.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", "error.confirmPassword", "Passwords do not match");
+        }
+
+        if (!isValidPassword(newUser.getPassword())) {
+            bindingResult.rejectValue("password", "error.password", "Password must contain at least one uppercase letter, one number, and one special character");
+            return "sign_up";
+        }
+
+        if (bindingResult.hasErrors()) {
             return "sign_up";
         }
 
@@ -72,26 +89,24 @@ public class SignUpController {
 
         try {
             userService.saveUser(newUser);
-        } catch (DataIntegrityViolationException e) {
-            model.addAttribute("error", "Username or email already exists");
+            redirectAttributes.addFlashAttribute("registrationSuccess", "Registration successful! Please log in to your account.");
+        } catch (Exception e) {
+            bindingResult.reject("registrationError", "An error occurred during registration");
             return "sign_up";
         }
 
-        return "redirect:/profile";
+        return "redirect:/sign_in";
     }
 
     private boolean isValidPassword(String password) {
-        return password.length() >= 8 &&
-                password.length() <= 16 &&
-                password.matches(".*[0-9].*") &&
-                password.matches(".*[a-z].*") &&
-                password.matches(".*[A-Z].*") &&
-                password.matches(".*[!@#&()–[{}]:;',?/*~$^+=<>].*");
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,16}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
     }
 
     private boolean isValidUsername(String username) {
-        return username.matches("^(?!.*[^a-zA-Z0-9]).*$");
-
+        return username.matches("^[a-zA-Z0-9]+$");
     }
 
     private boolean isRepeatingCharacters(String username) {

@@ -28,6 +28,14 @@ public class UserService {
         return userRepository.findByUsername(username).orElse(null);
     }
 
+    public boolean usernameExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
+
+    public boolean ifEmailExists(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
     public void saveUser(User user) {
         userRepository.save(user);
     }

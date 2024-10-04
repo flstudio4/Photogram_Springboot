@@ -11,12 +11,6 @@
     <link href="/css/sign_in_sign_up.css" rel="stylesheet">
 </head>
 <body>
-<div class="container-fluid">
-    <div th:if="${error}" class="alert alert-danger fixed-top alert-dismissible fade show" role="alert">
-        <p th:text="${error}"></p>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-</div>
 
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="form-container">
@@ -28,21 +22,41 @@
             <div class="form-group">
                 <input type="text" id="username" th:field="*{username}" required placeholder=" ">
                 <label for="username">Username</label>
+                <div th:if="${#fields.hasErrors('username')}" class="text-danger">
+                    <p th:errors="*{username}" class="error-messages"></p>
+                </div>
             </div>
 
             <div class="form-group">
                 <input type="email" id="email" th:field="*{email}" required placeholder=" ">
                 <label for="email">Email</label>
+                <div th:if="${#fields.hasErrors('email')}" class="text-danger">
+                    <p th:errors="*{email}" class="error-messages"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="avatar" th:field="*{avatar}" required placeholder=" ">
+                <label for="avatar">Avatar</label>
+                <div th:if="${#fields.hasErrors('avatar')}" class="text-danger">
+                    <p th:errors="*{avatar}" class="error-messages"></p>
+                </div>
             </div>
 
             <div class="form-group">
                 <input type="password" id="password" th:field="*{password}" required placeholder=" ">
                 <label for="password">Password</label>
+                <div th:if="${#fields.hasErrors('password')}" class="text-danger">
+                    <p th:errors="*{password}" class="error-messages"></p>
+                </div>
             </div>
 
             <div class="form-group">
-                <input type="password" id="confirm-password" name="confirmPassword" required placeholder=" ">
+                <input type="password" id="confirm-password" name="confirmPassword" th:field="*{confirmPassword}" required placeholder=" ">
                 <label for="confirm-password">Confirm Password</label>
+                <div th:if="${#fields.hasErrors('confirmPassword')}" class="text-danger">
+                    <p th:errors="*{confirmPassword}" class="error-messages"></p>
+                </div>
             </div>
 
             <button type="submit" class="form-button">Sign Up</button>
