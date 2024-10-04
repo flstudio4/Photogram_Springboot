@@ -16,15 +16,16 @@
         <p th:text="${error}"></p>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div id="success-alert" th:if="${message}" class="alert alert-success fixed-top" role="alert">
-        <p th:text="${message}"></p>
+
+    <div id="success-alert" th:if="${registrationSuccess}" class="alert alert-success fixed-top" role="alert">
+        <p th:text="${registrationSuccess}"></p>
     </div>
 </div>
 
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="form-container">
         <h1 class="photogram">Photogram</h1>
-        <p>Sign in into your account</p>
+        <p>Sign in to your account</p>
         <form th:action="@{/sign_in}" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
@@ -44,12 +45,13 @@
         </form>
     </div>
 </div>
-    <script>
-        $(document).ready(function () {
-            setTimeout(function () {
-                $("#success-alert").fadeOut(1000);
-            }, 5000);
-        });
-    </script>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#success-alert").fadeOut(1000);
+        }, 5000);
+    });
+</script>
 </body>
 </html>
