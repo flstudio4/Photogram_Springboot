@@ -51,7 +51,7 @@
                             </a></li>
 
                             <li>
-                                <form id="logoutForm" action="#" th:action="@{/logout}" method="post"
+                                <form id="logoutForm" th:action="@{/logout}" method="post"
                                       style="display: inline;">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                     <a href="#" onclick="document.getElementById('logoutForm').submit(); return false;"

@@ -17,8 +17,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div id="success-alert" th:if="${registrationSuccess}" class="alert alert-success fixed-top" role="alert">
+    <div id="reg-success-alert" th:if="${registrationSuccess}" class="alert alert-success fixed-top" role="alert">
         <p th:text="${registrationSuccess}"></p>
+    </div>
+
+    <div id="logout-success" th:if="${param.logout}" class="alert alert-success fixed-top" role="alert">
+        <p>You have been logged out successfully.</p>
     </div>
 </div>
 
@@ -49,7 +53,8 @@
 <script>
     $(document).ready(function () {
         setTimeout(function () {
-            $("#success-alert").fadeOut(1000);
+            $("#reg-success-alert").fadeOut(1000);
+            $("#logout-success").fadeOut(1000)
         }, 5000);
     });
 </script>
