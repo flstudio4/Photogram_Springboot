@@ -1,4 +1,4 @@
-package photogram.controllers;
+package photogram;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,6 @@ public class SignUpController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @ModelAttribute("user")
-    public User user() {
-        return new User();
-    }
-
     @GetMapping("/sign_up")
     public String signUpForm(Model model) {
         model.addAttribute("user", new User());
@@ -42,29 +37,37 @@ public class SignUpController {
     @PostMapping("/sign_up")
     public String signUp(@Valid @ModelAttribute("user") User newUser,
                          BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes,
-                         Model model) {
+                         RedirectAttributes redirectAttributes) {
+
+        // Validation checks
+        validateUser(newUser, bindingResult);
 
         if (bindingResult.hasErrors()) {
+            return "sign_up"; // Return to sign-up form if there are errors
+        }
+
+        // Password encoding and saving user
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+
+        try {
+            userService.saveUser(newUser);
+            redirectAttributes.addFlashAttribute("registrationSuccess", "Registration successful! Please log in to your account.");
+        } catch (Exception e) {
+            bindingResult.reject("registrationError", "An error occurred during registration");
             return "sign_up";
         }
 
+        return "redirect:/sign_in"; // Redirect to sign-in on success
+    }
+
+    private void validateUser(User newUser, BindingResult bindingResult) {
         if (!isValidUsername(newUser.getUsername())) {
             bindingResult.rejectValue("username", "error.username", "Username should only contain letters and numbers");
-            return "sign_up";
-        }
-
-        if (!isValidUsernameLength(newUser.getUsername())) {
+        } else if (!isValidUsernameLength(newUser.getUsername())) {
             bindingResult.rejectValue("username", "error.username", "Username must be at least 6 characters and no longer than 12 characters");
-            return "sign_up";
-        }
-
-        if (!isRepeatingCharacters(newUser.getUsername())) {
+        } else if (!isRepeatingCharacters(newUser.getUsername())) {
             bindingResult.rejectValue("username", "error.username", "Username should not contain repeating characters");
-            return "sign_up";
-        }
-
-        if (userService.usernameExists(newUser.getUsername())) {
+        } else if (userService.usernameExists(newUser.getUsername())) {
             bindingResult.rejectValue("username", "error.username", "Username is already taken");
         }
 
@@ -78,24 +81,7 @@ public class SignUpController {
 
         if (!isValidPassword(newUser.getPassword())) {
             bindingResult.rejectValue("password", "error.password", "Password must contain at least one uppercase letter, one number, and one special character");
-            return "sign_up";
         }
-
-        if (bindingResult.hasErrors()) {
-            return "sign_up";
-        }
-
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-
-        try {
-            userService.saveUser(newUser);
-            redirectAttributes.addFlashAttribute("registrationSuccess", "Registration successful! Please log in to your account.");
-        } catch (Exception e) {
-            bindingResult.reject("registrationError", "An error occurred during registration");
-            return "sign_up";
-        }
-
-        return "redirect:/sign_in";
     }
 
     private boolean isValidPassword(String password) {
