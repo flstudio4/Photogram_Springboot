@@ -1,4 +1,4 @@
-package photogram;
+package photogram.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
