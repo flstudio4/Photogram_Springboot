@@ -2,7 +2,6 @@ package photogram.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.Model;
-import photogram.SignInController;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;

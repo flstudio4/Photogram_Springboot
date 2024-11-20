@@ -1,7 +1,6 @@
 package photogram.controllers;
 
 import org.junit.jupiter.api.Test;
-import photogram.HomeController;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
