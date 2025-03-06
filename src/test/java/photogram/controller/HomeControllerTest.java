@@ -1,4 +1,4 @@
-package photogram.controllers;
+package photogram.controller;
 
 import org.junit.jupiter.api.Test;
 

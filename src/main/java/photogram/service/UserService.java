@@ -1,10 +1,10 @@
-package photogram.services;
+package photogram.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import photogram.models.User;
-import photogram.repositories.UserRepository;
+import photogram.model.User;
+import photogram.repository.UserRepository;
 
 @Service
 public class UserService {

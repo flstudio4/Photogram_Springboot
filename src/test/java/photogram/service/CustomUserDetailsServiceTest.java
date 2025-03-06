@@ -1,4 +1,4 @@
-package photogram.services;
+package photogram.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,8 +7,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import photogram.models.User;
-import photogram.repositories.UserRepository;
+import photogram.model.User;
+import photogram.repository.UserRepository;
 
 import java.util.Optional;
 

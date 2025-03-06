@@ -1,12 +1,12 @@
-package photogram.services;
+package photogram.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import photogram.models.User;
-import photogram.repositories.UserRepository;
+import photogram.model.User;
+import photogram.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Optional;

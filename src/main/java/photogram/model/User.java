@@ -1,4 +1,4 @@
-package photogram.models;
+package photogram.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
